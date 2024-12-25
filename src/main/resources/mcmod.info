@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "lunaclient",
+    "name": "LunaClient",
+    "description": "LunaClient Mod. Best client on world.",
+    "version": "${version}",
+    "mcversion": "${mcVersionStr}",
+    "url": "https://github.com/Polyfrost/PolySprint",
+    "updateUrl": "",
+    "authorList": ["Polyfrost", "My-Name-Is-Jeff"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

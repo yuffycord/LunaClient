@@ -1,0 +1,12 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "net.lunaclient.lunaclientmod.mixins",
+  "plugin": "net.lunaclient.lunaclientmod.tweaker.MixinPlugin",
+  "refmap": "mixins.lunaclient.refmap.json",
+  "mixins": [
+    "MixinEntityPlayerSP",
+    "MixinMovementInputFromOptions",
+    "MixinClientPlayerAPI"
+  ],
+  "verbose": true
+}
