@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by

@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -32,16 +32,16 @@ import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.libs.universal.UKeyboard
 import net.minecraft.entity.player.EntityPlayer
 import net.lunaclient.lunaclientmod.PolySprint
-import net.lunaclient.lunaclientmod.core.PolySprintConfig.ToggleSprintHud.DisplayState.Companion.activeDisplay
+import net.lunaclient.lunaclientmod.core.SprintMod.ToggleSprintHud.DisplayState.Companion.activeDisplay
 import java.io.File
 import java.math.RoundingMode
 
 
-object PolySprintConfig : Config(
+object SprintMod : Config(
     Mod(
         "Sprint",
         ModType.PVP,
-        "/polysprint_dark.svg",
+        "/assets/lunaclientmod/others/sprint.svg",
         VigilanceMigrator(File("./config/simpletogglesprint.toml").absolutePath),
         ),
     "lc-sprint.json"
@@ -126,7 +126,7 @@ object PolySprintConfig : Config(
             if (keybindToggleSprint) {
                 if (enabled && toggleSprint && !PolySprint.sprintHeld) {
                     toggleSprintState = !toggleSprintState
-                    PolySprintConfig.save()
+                    SprintMod.save()
                 }
                 PolySprint.sprintHeld = !PolySprint.sprintHeld
             }
@@ -135,7 +135,7 @@ object PolySprintConfig : Config(
             if (keybindToggleSneak) {
                 if (enabled && toggleSneak && !PolySprint.sneakHeld) {
                     toggleSneakState = !toggleSneakState
-                    PolySprintConfig.save()
+                    SprintMod.save()
                 }
                 PolySprint.sneakHeld = !PolySprint.sneakHeld
             }
@@ -275,16 +275,16 @@ object PolySprintConfig : Config(
 
         private enum class DisplayState(val displayText: ToggleSprintHud.() -> String, val displayCheck: (EntityPlayer) -> Boolean) {
             DESCENDINGHELD({ descendingHeld }, { it.capabilities.isFlying && it.isSneaking && PolySprint.sneakHeld }),
-            DESCENDINGTOGGLED({ descendingToggled }, { it.capabilities.isFlying && PolySprintConfig.enabled && toggleSprint && toggleSneakState }),
+            DESCENDINGTOGGLED({ descendingToggled }, { it.capabilities.isFlying && SprintMod.enabled && toggleSprint && toggleSneakState }),
             DESCENDING({ descending }, { it.capabilities.isFlying && it.isSneaking }),
             FLYING({ flying }, { it.capabilities.isFlying && !shouldFlyBoost() }),
             FLYBOOST({ flyBoost }, { it.capabilities.isFlying && shouldFlyBoost() }),
             RIDING({ riding }, { it.isRiding }),
             SNEAKHELD({ sneakHeld }, { it.isSneaking && PolySprint.sneakHeld }),
-            TOGGLESNEAK({ sneakToggle }, { PolySprintConfig.enabled && toggleSneak && toggleSneakState }),
+            TOGGLESNEAK({ sneakToggle }, { SprintMod.enabled && toggleSneak && toggleSneakState }),
             SNEAKING({ sneak }, { it.isSneaking }),
             SPRINTHELD({ sprintHeld }, { it.isSprinting && PolySprint.sprintHeld }),
-            TOGGLESPRINT({ sprintToggle }, { PolySprintConfig.enabled && toggleSprint && toggleSprintState }),
+            TOGGLESPRINT({ sprintToggle }, { SprintMod.enabled && toggleSprint && toggleSprintState }),
             SPRINTING({ sprint }, { it.isSprinting });
 
             val isActive: Boolean

@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -22,41 +22,48 @@ import cc.polyfrost.oneconfig.config.Config
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
-import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator
 import cc.polyfrost.oneconfig.events.EventManager
-import cc.polyfrost.oneconfig.hud.SingleTextHud
+import cc.polyfrost.oneconfig.hud.TextHud
 import net.minecraft.client.Minecraft
-import java.io.File
 
 
-object PolyFPS : Config(
+object PingMod : Config(
     Mod(
-        "FPS",
-        ModType.PVP,
-        "/polysprint_dark.svg",
+        "Ping",
+        ModType.HUD,
+        "/assets/lunaclientmod/lunaclient_vector.svg",
         ),
-    "lc-fps.json"
+    "lc-ping.json"
 ) {
 
 
     @HUD(
-        name = "FPS",
+        name = "Ping",
         subcategory = "HUD"
     )
-    var hud = FPSHud()
+    var hud = PingHud()
 
     init {
         initialize()
     }
 
-    class FPSHud : SingleTextHud("FPS", true) {
+    class PingHud : TextHud(true, 10, 50) {
         
         init {
             EventManager.INSTANCE.register(this)
         }
 
-        override fun getText(example: Boolean): String {
-           return Minecraft.getDebugFPS().toString()
+        override fun getLines(lines: MutableList<String>, example: Boolean) {
+            try {
+                val player = Minecraft.getMinecraft().thePlayer
+                val ping = Minecraft.getMinecraft().netHandler.getPlayerInfo(player.uniqueID).responseTime ?: -1
+                lines.add("Ping: ${if (ping >= 0) ping else "0"} ms")
+            } catch (e: NullPointerException) {
+                lines.add("Ping: 0 ms")
+            } catch (e: Exception) {
+                lines.add("Ping: 0 ms")
+                e.printStackTrace()
+            }
         }
     }
 

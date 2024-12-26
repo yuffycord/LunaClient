@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -23,40 +23,38 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import cc.polyfrost.oneconfig.events.EventManager
-import cc.polyfrost.oneconfig.hud.TextHud
+import cc.polyfrost.oneconfig.hud.SingleTextHud
 import net.minecraft.client.Minecraft
 
 
-object PolyPing : Config(
+object FPSMod : Config(
     Mod(
-        "Ping",
+        "FPS",
         ModType.HUD,
-        "/polysprint_dark.svg",
+        "/assets/lunaclientmod/lunaclient_vector.svg",
         ),
-    "lc-ping.json"
+    "lc-fps.json"
 ) {
 
 
     @HUD(
-        name = "Ping",
+        name = "FPS",
         subcategory = "HUD"
     )
-    var hud = PingHud()
+    var hud = FPSHud()
 
     init {
         initialize()
     }
 
-    class PingHud : TextHud(true, 10, 50) {
+    class FPSHud : SingleTextHud("FPS", true) {
         
         init {
             EventManager.INSTANCE.register(this)
         }
 
-        override fun getLines(lines: MutableList<String>, example: Boolean) {
-            val player = Minecraft.getMinecraft().thePlayer
-            val ping = Minecraft.getMinecraft().netHandler.getPlayerInfo(player.uniqueID).responseTime ?: -1
-            lines.add("Ping: ${if (ping >= 0) ping else "0"} ms")
+        override fun getText(example: Boolean): String {
+           return Minecraft.getDebugFPS().toString()
         }
     }
 

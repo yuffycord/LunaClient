@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -19,18 +19,17 @@ package net.lunaclient.lunaclientmod
 
 import cc.polyfrost.oneconfig.libs.universal.UMinecraft
 import cc.polyfrost.oneconfig.utils.commands.CommandManager
+import net.lunaclient.lunaclientmod.commands.LunaClientCommand
+import net.lunaclient.lunaclientmod.core.*
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.InputEvent
-import net.lunaclient.lunaclientmod.commands.PolySprintCommand
-import net.lunaclient.lunaclientmod.commands.PolyFPSCommand
-import net.lunaclient.lunaclientmod.core.PolyFPS
-import net.lunaclient.lunaclientmod.core.PolyPing
-import net.lunaclient.lunaclientmod.core.PolySprintConfig
-import net.lunaclient.lunaclientmod.core.checkKeyCode
+import org.lwjgl.opengl.Display
+import javax.imageio.ImageIO
+
 
 @Mod(
     modid = PolySprint.MODID,
@@ -54,35 +53,48 @@ object PolySprint {
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
-        PolyFPS
-        PolyPing
+        FPSMod
+        PingMod
         MinecraftForge.EVENT_BUS.register(this)
     }
 
     @Mod.EventHandler
+    fun onPreInit(event: FMLInitializationEvent) {
+        Display.setTitle("LunaClient 1.8.9")
+        Display.setIcon(
+            IconLoader.load(
+                ImageIO.read(
+                        PolySprint::class.java.getResourceAsStream(
+                            "/assets/lunaclientmod/lunaclient_icon.png"
+                        )
+                )
+            ))
+    }
+
+    @Mod.EventHandler
     fun onPostInit(event: FMLPostInitializationEvent) {
-        CommandManager.INSTANCE.registerCommand(PolySprintCommand())
-        CommandManager.INSTANCE.registerCommand(PolyFPSCommand())
+        // Open OneConfig
+        CommandManager.INSTANCE.registerCommand(LunaClientCommand())
     }
 
     @SubscribeEvent
     fun onInput(event: InputEvent) {
-        if (!PolySprintConfig.enabled) return
+        if (!SprintMod.enabled) return
         val sprint = gameSettings.keyBindSprint.keyCode
         val sneak = gameSettings.keyBindSneak.keyCode
-        if (!PolySprintConfig.keybindToggleSprint && checkKeyCode(sprint)) {
-            if (PolySprintConfig.enabled && PolySprintConfig.toggleSprint && !sprintHeld) {
-                PolySprintConfig.toggleSprintState = !PolySprintConfig.toggleSprintState
-                PolySprintConfig.save()
+        if (!SprintMod.keybindToggleSprint && checkKeyCode(sprint)) {
+            if (SprintMod.enabled && SprintMod.toggleSprint && !sprintHeld) {
+                SprintMod.toggleSprintState = !SprintMod.toggleSprintState
+                SprintMod.save()
             }
             sprintHeld = true
         } else {
             sprintHeld = false
         }
-        if (!PolySprintConfig.keybindToggleSneak && checkKeyCode(sneak)) {
-            if (PolySprintConfig.enabled && PolySprintConfig.toggleSneak && !sneakHeld) {
-                PolySprintConfig.toggleSneakState = !PolySprintConfig.toggleSneakState
-                PolySprintConfig.save()
+        if (!SprintMod.keybindToggleSneak && checkKeyCode(sneak)) {
+            if (SprintMod.enabled && SprintMod.toggleSneak && !sneakHeld) {
+                SprintMod.toggleSneakState = !SprintMod.toggleSneakState
+                SprintMod.save()
             }
             sneakHeld = true
         } else {

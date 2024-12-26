@@ -16,28 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.lunaclient.lunaclientmod.mixins;
+package net.lunaclient.lunaclientmod.mixins.forge;
 
-import net.lunaclient.lunaclientmod.core.UtilsKt;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.MovementInput;
-import net.minecraft.util.MovementInputFromOptions;
+import net.lunaclient.lunaclientmod.gui.CustomSplashProgress;
+import net.lunaclient.lunaclientmod.mixins.forge.FMLClientHandlerMixin;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(MovementInputFromOptions.class)
-public abstract class MixinMovementInputFromOptions extends MovementInput {
+import java.util.concurrent.Semaphore;
 
-    @Redirect(
-            method = "updatePlayerMoveState",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/settings/KeyBinding;isKeyDown()Z"
-            )
-    )
-    private boolean setSneakState(KeyBinding keyBinding) {
-        return UtilsKt.shouldSetSneak(keyBinding);
+@Mixin(value = FMLClientHandler.class, remap = false)
+public class FMLClientHandlerMixin {
+    @Redirect(method = "processWindowMessages", at = @At(value = "INVOKE", target = "Ljava/util/concurrent/Semaphore;release()V"))
+    private void redirectRelease(Semaphore instance) {
+        CustomSplashProgress.mutex.release();
     }
 
+    @Redirect(method = "processWindowMessages", at = @At(value = "INVOKE", target = "Ljava/util/concurrent/Semaphore;tryAcquire()Z"))
+    private boolean redirectTry(Semaphore instance) {
+        return CustomSplashProgress.mutex.tryAcquire();
+    }
 }

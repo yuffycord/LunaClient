@@ -4,9 +4,11 @@
   "plugin": "net.lunaclient.lunaclientmod.tweaker.MixinPlugin",
   "refmap": "mixins.lunaclient.refmap.json",
   "mixins": [
+    "playerapi.MixinClientPlayerAPI",
     "MixinEntityPlayerSP",
     "MixinMovementInputFromOptions",
-    "MixinClientPlayerAPI"
+    "forge.FMLClientHandlerMixin",
+    "forge.SplashProgressMixin"
   ],
   "verbose": true
 }

@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -26,7 +26,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.MovementInput;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
-import net.lunaclient.lunaclientmod.core.PolySprintConfig;
+import net.lunaclient.lunaclientmod.core.SprintMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -64,7 +64,7 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
             )
     )
     private boolean redirectWTap(EntityPlayerSP instance) {
-        return !PolySprintConfig.INSTANCE.enabled || !PolySprintConfig.INSTANCE.getDisableWTapSprint();
+        return !SprintMod.INSTANCE.enabled || !SprintMod.INSTANCE.getDisableWTapSprint();
     }
 
     @Inject(
@@ -77,12 +77,12 @@ public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
     )
     private void modifyFlightSpeed(CallbackInfo ci) {
         if (UtilsKt.shouldFlyBoost()) {
-            capabilities.setFlySpeed(0.05F * PolySprintConfig.INSTANCE.getFlyBoostAmount());
+            capabilities.setFlySpeed(0.05F * SprintMod.INSTANCE.getFlyBoostAmount());
             if (movementInput.sneak) {
-                motionY -= 0.15F * PolySprintConfig.INSTANCE.getFlyBoostAmount();
+                motionY -= 0.15F * SprintMod.INSTANCE.getFlyBoostAmount();
             }
             if (movementInput.jump) {
-                motionY += 0.15F * PolySprintConfig.INSTANCE.getFlyBoostAmount();
+                motionY += 0.15F * SprintMod.INSTANCE.getFlyBoostAmount();
             }
         } else {
             capabilities.setFlySpeed(0.05F);

@@ -2,14 +2,14 @@
   {
     "modid": "lunaclient",
     "name": "LunaClient",
-    "description": "LunaClient Mod. Best client on world.",
+    "description": "LunaClient is a best client on world.",
     "version": "${version}",
     "mcversion": "${mcVersionStr}",
-    "url": "https://github.com/Polyfrost/PolySprint",
+    "url": "https://github.com/yuffycord/lunaclient",
     "updateUrl": "",
-    "authorList": ["Polyfrost", "My-Name-Is-Jeff"],
-    "credits": "",
-    "logoFile": "",
+    "authorList": ["Team PaichaLover"],
+    "credits": "Polyfrost, My-Name-Is-Jeff",
+    "logoFile": "assets/lunaclientmod/lunaclient_icon.png",
     "screenshots": [],
     "dependencies": []
   }

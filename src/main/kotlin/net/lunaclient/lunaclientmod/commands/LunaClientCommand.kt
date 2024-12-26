@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -17,15 +17,17 @@
  */
 package net.lunaclient.lunaclientmod.commands
 
+import cc.polyfrost.oneconfig.gui.OneConfigGui
 import cc.polyfrost.oneconfig.utils.commands.annotations.Command
 import cc.polyfrost.oneconfig.utils.commands.annotations.Main
-import net.lunaclient.lunaclientmod.core.PolyFPS
+import cc.polyfrost.oneconfig.utils.gui.GuiUtils
+import net.lunaclient.lunaclientmod.core.FPSMod
 
-@Command("lcfps", aliases = ["fps", "fpsmod", "lunaclientfps", "polyfps"])
-class PolyFPSCommand {
+@Command("lc", aliases = ["lunaclient"])
+class LunaClientCommand {
 
     @Main
     fun execCommand() {
-        PolyFPS.openGui()
+        GuiUtils.displayScreen(OneConfigGui())
     }
 }

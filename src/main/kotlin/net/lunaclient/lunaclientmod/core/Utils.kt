@@ -1,6 +1,6 @@
 /*
- * PolySprint - Toggle sprint and sneak with a keybind.
- *  Copyright (C) 2023  Polyfrost
+ * LunaClient - A best client on world.
+ *  Copyright (C) 2024 Team PaichaLover
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -27,15 +27,15 @@ import net.lunaclient.lunaclientmod.PolySprint.gameSettings
 import net.lunaclient.lunaclientmod.PolySprint.player
 
 fun shouldSetSprint(keyBinding: KeyBinding): Boolean {
-    return keyBinding.isKeyDown || UScreen.currentScreen == null && PolySprintConfig.enabled && PolySprintConfig.toggleSprint && PolySprintConfig.toggleSprintState && keyBinding === gameSettings.keyBindSprint
+    return keyBinding.isKeyDown || UScreen.currentScreen == null && SprintMod.enabled && SprintMod.toggleSprint && SprintMod.toggleSprintState && keyBinding === gameSettings.keyBindSprint
 }
 
 fun shouldSetSneak(keyBinding: KeyBinding): Boolean {
-    return keyBinding.isKeyDown || UScreen.currentScreen == null && PolySprintConfig.enabled && PolySprintConfig.toggleSneak && PolySprintConfig.toggleSneakState && keyBinding === gameSettings.keyBindSneak
+    return keyBinding.isKeyDown || UScreen.currentScreen == null && SprintMod.enabled && SprintMod.toggleSneak && SprintMod.toggleSneakState && keyBinding === gameSettings.keyBindSneak
 }
 
 fun shouldFlyBoost(): Boolean {
-    return gameSettings.keyBindSprint.isKeyDown && PolySprintConfig.enabled && PolySprintConfig.toggleFlyBoost && player!!.capabilities.isFlying && player!!.capabilities.isCreativeMode && !HypixelUtils.INSTANCE.isHypixel
+    return gameSettings.keyBindSprint.isKeyDown && SprintMod.enabled && SprintMod.toggleFlyBoost && player!!.capabilities.isFlying && player!!.capabilities.isCreativeMode && !HypixelUtils.INSTANCE.isHypixel
 }
 
 fun checkKeyCode(keyCode: Int) = if (keyCode > 0) UKeyboard.isKeyDown(keyCode) else Mouse.isButtonDown(
